@@ -1,5 +1,6 @@
 package dacn.com.profileservice.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -35,5 +36,12 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfile userProfile =
                 userProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("Profile not found"));
         return userProfileMapper.userProfiletoUserProfileResponse(userProfile);
+    }
+
+    @Override
+    public List<UserProfileResponse> getAllProfiles() {
+        var profiles = userProfileRepository.findAll();
+
+        return profiles.stream().map(userProfileMapper::userProfiletoUserProfileResponse).toList();
     }
 }

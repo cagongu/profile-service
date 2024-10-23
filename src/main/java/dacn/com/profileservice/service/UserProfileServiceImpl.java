@@ -3,6 +3,7 @@ package dacn.com.profileservice.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import dacn.com.profileservice.dto.request.ProfileCreationRequest;
@@ -38,10 +39,13 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userProfileMapper.userProfiletoUserProfileResponse(userProfile);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<UserProfileResponse> getAllProfiles() {
         var profiles = userProfileRepository.findAll();
 
-        return profiles.stream().map(userProfileMapper::userProfiletoUserProfileResponse).toList();
+        return profiles.stream()
+                .map(userProfileMapper::userProfiletoUserProfileResponse)
+                .toList();
     }
 }

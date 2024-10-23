@@ -8,6 +8,8 @@ import dacn.com.profileservice.dto.response.UserProfileResponse;
 
 public interface UserProfileService {
     UserProfileResponse createProfile(ProfileCreationRequest request);
+
     UserProfileResponse getProfile(UUID id);
+
     List<UserProfileResponse> getAllProfiles();
 }
